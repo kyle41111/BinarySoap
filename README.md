@@ -5,5 +5,5 @@ A python tool to assist in your payloads classification against EDR/AV's machine
 
 # Usage:
 ```python
-python binarysoap.py <input_file> <output_file>
+python3 binarysoap.py <input_file> <output_file>
 ```
