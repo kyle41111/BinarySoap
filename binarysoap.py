@@ -2,7 +2,7 @@ import pefile
 import sys
 import os
 import struct
-
+# valid checksum (-0.142578 impact)
 def calculate_checksum(pe):
 
     checksum = 0
@@ -28,7 +28,7 @@ def scrub_binary(input_file, output_file):
         pe = pefile.PE(input_file, fast_load=False)
         pe.parse_data_directories()
         
-        # Modification 1: Strip debug directory (-0.482506 impact)
+        # Strip debug directory (-0.482506 impact)
         print("Stripping debug directory")
         if hasattr(pe, 'DIRECTORY_ENTRY_DEBUG'):
             pe.OPTIONAL_HEADER.DATA_DIRECTORY[6].VirtualAddress = 0
@@ -39,7 +39,7 @@ def scrub_binary(input_file, output_file):
                 if dbg_offset and size:
                     pe.set_bytes_at_offset(dbg_offset, b'\x00' * size)
         
-        
+        # 0 linker version (-0.262158)
         print("Zeroing linker version")
         pe.OPTIONAL_HEADER.MajorLinkerVersion = 0
         pe.OPTIONAL_HEADER.MinorLinkerVersion = 0
